@@ -1,20 +1,52 @@
+/* ----------------------------------------------*/
+/* Les dépendances ------------------------------*/
+/* ----------------------------------------------*/
 // Import d'appolo-server
 const{ ApolloServer } = require('apollo-server');
 const gql  = require('graphql-tag');
 // Ajout de mangoose pour la BD:
 const mongoose = require('mongoose');
+
+/* ----------------------------------------------*/
+/* Les imports relatifs -------------------------*/
+/* ----------------------------------------------*/
+const Post = require('./models/Post');
+const User = require('./models/User');
+
 // Ajout de la BD
 const { MONGODB } = require('./config.js');
 // On défini une une requête "sayHi" qui retourne un String, obligatoirement (String!)
+
+
 const  typeDefs = gql`
-    type Query{
-        sayHi:  String!
+    type Post{
+        id: ID!
+        body: String!
+        createdAt: String!
+        username: String!
     }
-`
+    type Query{
+        getPosts:  [Post]
+    }
+`;
+
 // Chaque Query a besoin d'un resolver
+// const resolvers = {
+//     Query:{
+//         sayHi: () => 'Hello World!'
+//     }
+// };
+
 const resolvers = {
     Query:{
-        sayHi: () => 'Hello World!'
+        async getPosts(){
+            try{
+                const posts = await Post.find();
+                return posts
+            }catch(err){
+                throw new Error(err)
+            }
+        }
     }
 };
 
