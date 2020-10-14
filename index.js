@@ -10,25 +10,25 @@ const mongoose = require('mongoose');
 /* ----------------------------------------------*/
 /* Les imports relatifs -------------------------*/
 /* ----------------------------------------------*/
+const typeDefs = require('./graphQL/typeDefs')
 const Post = require('./models/Post');
 const User = require('./models/User');
-
 // Ajout de la BD
 const { MONGODB } = require('./config.js');
 // On défini une une requête "sayHi" qui retourne un String, obligatoirement (String!)
 
-
-const  typeDefs = gql`
-    type Post{
-        id: ID!
-        body: String!
-        createdAt: String!
-        username: String!
-    }
-    type Query{
-        getPosts:  [Post]
-    }
-`;
+// : Déplacé dans le fichier ./graphQL/typeDefs.js
+// const  typeDefs = gql`
+//     type Post{
+//         id: ID!
+//         body: String!
+//         createdAt: String!
+//         username: String!
+//     }
+//     type Query{
+//         getPosts:  [Post]
+//     }
+// `;
 
 // Chaque Query a besoin d'un resolver
 // const resolvers = {
