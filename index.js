@@ -1,6 +1,10 @@
 // Import d'appolo-server
 const{ ApolloServer } = require('apollo-server');
 const gql  = require('graphql-tag');
+// Ajout de mangoose pour la BD:
+const mongoose = require('mongoose');
+// Ajout de la BD
+const { MONGODB } = require('./config.js');
 // On défini une une requête "sayHi" qui retourne un String, obligatoirement (String!)
 const  typeDefs = gql`
     type Query{
@@ -29,6 +33,10 @@ server.listen({port:5000})
         console.log(`Le serveur est disponible à cette adresse :${res.url}`)
     }
 );
+
+mongoose
+.connect(MONGODB, {useNewUrlParser:true})
+.then(() => {console.log('MongoDB Connected')})
 
 
 //---------------------------------------------------------------------------------------------------------------
