@@ -3,7 +3,9 @@ const User = require('../../models/User')
 module.exports = {
     Mutation:{
         register(parent, args, context, info){
-            
+            // TODO : Valider les données de l'user
+            // TODO : S'assurer que l'utilisateur n'existe pas
+            // TODO : Crypter le mot de passe
         }
     }
 }
