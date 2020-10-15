@@ -1,54 +1,27 @@
 /* ----------------------------------------------*/
 /* Les dépendances ------------------------------*/
 /* ----------------------------------------------*/
+
 // Import d'appolo-server
 const{ ApolloServer } = require('apollo-server');
-const gql  = require('graphql-tag');
+
+//  GraphQL est desormais inutile puisque tout se fait dans graphQL/typeDefs.js
+// const gql  = require('graphql-tag');
+
 // Ajout de mangoose pour la BD:
 const mongoose = require('mongoose');
 
 /* ----------------------------------------------*/
 /* Les imports relatifs -------------------------*/
 /* ----------------------------------------------*/
-const typeDefs = require('./graphQL/typeDefs')
-const Post = require('./models/Post');
-const User = require('./models/User');
+const typeDefs = require('./graphQL/typeDefs');
+// Les lignes ci-dessous sont remplacé par l'import des resolvers
+//  const Post = require('./models/Post');
+//  const User = require('./models/User');
+const resolvers = require('./graphQL/resolvers');
+
 // Ajout de la BD
 const { MONGODB } = require('./config.js');
-// On défini une une requête "sayHi" qui retourne un String, obligatoirement (String!)
-
-// : Déplacé dans le fichier ./graphQL/typeDefs.js
-// const  typeDefs = gql`
-//     type Post{
-//         id: ID!
-//         body: String!
-//         createdAt: String!
-//         username: String!
-//     }
-//     type Query{
-//         getPosts:  [Post]
-//     }
-// `;
-
-// Chaque Query a besoin d'un resolver
-// const resolvers = {
-//     Query:{
-//         sayHi: () => 'Hello World!'
-//     }
-// };
-
-const resolvers = {
-    Query:{
-        async getPosts(){
-            try{
-                const posts = await Post.find();
-                return posts
-            }catch(err){
-                throw new Error(err)
-            }
-        }
-    }
-};
 
 // On définit notre serveur 
 const server = new ApolloServer({
