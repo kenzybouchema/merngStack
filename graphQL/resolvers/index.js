@@ -23,4 +23,7 @@ module.exports = {
     Query:{
         ...postsResolvers.QueryPosts
     },
+    Mutation:{
+        ...usersResolvers.Register
+    }
 }

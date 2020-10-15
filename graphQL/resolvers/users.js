@@ -1,14 +1,9 @@
 const User = require('../../models/User')
-
+// Ici on impléemente ce qu'on a défini dans le fichier typeDefs.js
 module.exports = {
-    QueryUsers:{
-        async getUsers(){
-            try{
-                const users = await User.find();
-                return users
-            }catch(err){
-                throw new Error(err)
-            }
+    Mutation:{
+        register(parent, args, context, info){
+            
         }
     }
 }
