@@ -14,7 +14,9 @@ module.exports = {
             context, 
             info){
                 // TODO : Valider les données de l'user
+
                 // TODO : S'assurer que l'utilisateur n'existe pas
+
                 // TODO : Crypter le mot de passe
                 password = await bcrypt.hash(password,12); // bcryptJS est une promesse
                 // On crée un nouveau User avec le mdp chiffré
@@ -40,7 +42,7 @@ module.exports = {
                     ...res._doc,
                     id: res._id,
                     token
-                }
+                };
             }
         }
     } 
