@@ -3,7 +3,8 @@ const {gql} = require('apollo-server')
 
 // Une input est ce que l'on donne à resolver pour qu'il nous retounr une certaine 
 // donnée
-// On a créée une mutation register qui prend comme argument registerInput qui est de type RegisterInput et qui retourne un utilisateur User
+// On a créée une mutation register qui prend comme argument registerInput 
+// qui est de type RegisterInput et qui retourne un utilisateur User
 
 module.exports = gql`
     type Post{
@@ -20,9 +21,10 @@ module.exports = gql`
     }
     type User{
         id: ID!
-        body: String!
+        email: String!
         createdAt: String!
         username: String!
+        password: String!
         token: String!
     }
     type Query{
