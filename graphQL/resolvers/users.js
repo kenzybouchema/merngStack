@@ -14,12 +14,15 @@ module.exports = {
             // TODO : S'assurer que l'utilisateur n'existe pas
             // TODO : Crypter le mot de passe
             password = await bcrypt.hash(password,12); // bcryptJS est une promesse
+            // On crée un nouveau User avec le mdp chiffré
             const newUser = new User({
                 email,
                 username,
                 password,
                 createdAt: new Date().toISOString()
             })
+            // On enregistre le newUser
+            const res = await newUser.save();
         }
     }
 } 
