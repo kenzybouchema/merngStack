@@ -14,6 +14,12 @@ module.exports = {
             // TODO : S'assurer que l'utilisateur n'existe pas
             // TODO : Crypter le mot de passe
             password = await bcrypt.hash(password,12); // bcryptJS est une promesse
+            const newUser = new User({
+                email,
+                username,
+                password,
+                createdAt: new Date().toISOString()
+            })
         }
     }
 } 
