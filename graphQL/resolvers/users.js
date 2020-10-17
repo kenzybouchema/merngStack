@@ -8,6 +8,16 @@ const { UserInputError } = require('apollo-server');
 
 // Ici on impléemente ce qu'on a défini dans le fichier typeDefs.js
 module.exports = {
+    QueryUsers:{
+        async getUsers(){
+            try{
+                const users = await User.find();
+                return users
+            }catch(err){
+                throw new Error(err)
+            }
+        }
+    },
     Register:{
         async registerUser( // async car elle retourne une promesse
                 parent, // le parent est obligatoire
