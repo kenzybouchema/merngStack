@@ -4,7 +4,10 @@ const User = require('../../models/User')
 
 // La clé secrète est dans le fichier de config
 const { SECRET_KEY } = require('../../config');
+// On importe cette erreur mais je pense qu'il faudrait plutôt créer
+// une erreur spécialement pour notre cas  
 const { UserInputError } = require('apollo-server');
+const {validateRegisterInput} = require('../../util/userValidator');
 
 // Ici on impléemente ce qu'on a défini dans le fichier typeDefs.js
 module.exports = {
@@ -27,9 +30,14 @@ module.exports = {
                 // context, // pas obligatoire
                 // info // pas obligatoire
             ){
-                // TODO : Valider les données de l'user
-
-                // TODO : S'assurer que l'utilisateur n'existe pas
+                // Valider les données de l'user
+                // TODO penser à refactorer pour qu'il n'y est qu'un objet en arg.
+                const { valid, errors} =  
+                validateRegisterInput(username, email, password, confirmPassword);
+                if(!valid){
+                    throw new UserInputError('Errors', {errors});
+                }
+                //S'assurer que l'utilisateur n'existe pas
                 const user = await User.findOne({username});
                 console.log(user);
                 if(user){
@@ -41,7 +49,7 @@ module.exports = {
                         }
                     )
                 }
-                // TODO : Crypter le mot de passe
+                //Crypter le mot de passe
                 password = await bcrypt.hash(password,12); // bcryptJS est une promesse
                 console.log(password);
                 // On crée un nouveau User avec le mdp chiffré

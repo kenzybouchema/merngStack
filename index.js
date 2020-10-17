@@ -41,7 +41,7 @@ server.listen({port:5000})
 
 mongoose
 .connect(MONGODB, {useNewUrlParser:true})
-.then(() => {console.log('MongoDB Connected')})
+.then(() => {console.log('MongoDB Connected to:' + MONGODB)})
 
 
 //---------------------------------------------------------------------------------------------------------------
