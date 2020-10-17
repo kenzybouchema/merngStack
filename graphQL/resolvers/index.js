@@ -21,10 +21,10 @@ const usersResolvers = require('./users');
 
 module.exports = {
     Query:{
-        ...postsResolvers.QueryPosts,
-        ...usersResolvers.QueryUsers
+        ...postsResolvers.Query,
+        ...usersResolvers.Query
     },
     Mutation:{
-        ...usersResolvers.Register
+        ...usersResolvers.Mutation
     }
 }

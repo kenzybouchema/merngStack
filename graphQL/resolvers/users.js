@@ -7,11 +7,23 @@ const { SECRET_KEY } = require('../../config');
 // On importe cette erreur mais je pense qu'il faudrait plutôt créer
 // une erreur spécialement pour notre cas  
 const { UserInputError } = require('apollo-server');
-const {validateRegisterInput} = require('../../util/userValidator');
+const {validateRegisterInput, validateLoginInput} = require('../../util/userValidator');
+
+function generateToken(user){
+    return jwt.sign(
+        {
+            id: user.id,
+            email: user.email,
+            username: user.username
+        }, 
+        SECRET_KEY,
+        { expiresIn: '1h' }
+    );
+}
 
 // Ici on impléemente ce qu'on a défini dans le fichier typeDefs.js
 module.exports = {
-    QueryUsers:{
+    Query:{
         async getUsers(){
             try{
                 const users = await User.find();
@@ -21,7 +33,19 @@ module.exports = {
             }
         }
     },
-    Register:{
+    Mutation:{
+        async loginUser(username, password){
+            const {errors, valid} = validateLoginInput(username, password);
+            const user = await User.findOne({username});
+            if(!user){
+                throw new UserInputError('IdentifiantsIncorrects', {errors});
+            }
+            const match = await bcrypt.compare(password, user.password);
+            if(!match){
+            throw new UserInputError('IdentifiantsIncorrects', {errors});
+            }
+            const token = generateToken(user);
+        },
         async registerUser( // async car elle retourne une promesse
                 parent, // le parent est obligatoire
                 {
@@ -63,14 +87,7 @@ module.exports = {
                 // On enregistre le newUser
                 const res = await newUser.save();
                 
-                const token = jwt.sign({
-                    id: res.id,
-                    email: res.email,
-                    username: res.username
-                }, 
-                SECRET_KEY,
-                {expiresIn: '1h'}
-                );
+                const token = generateToken(res)
 
                 return{
                     // ... signifie que l'on spread les données 

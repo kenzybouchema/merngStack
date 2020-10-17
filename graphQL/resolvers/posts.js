@@ -10,7 +10,7 @@
 const Post = require('../../models/Post')
 
 module.exports = {
-    QueryPosts:{
+    Query:{
         async getPosts(){
             try{
                 const posts = await Post.find();

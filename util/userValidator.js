@@ -24,4 +24,27 @@ module.exports.validateRegisterInput =
         = 'Les deux mots de passes doivent être identiques'
     }
     return { errors, valid: Object.keys(errors).length < 1}
+};
+
+module.exports.validateLoginInput = (_,{username, password}) => {
+    // console.log('userValidator#validateLoginInput#username:' + username);
+    // console.log('userValidator#validateLoginInput#password:' + password);
+    const errors = {};
+    if(username.trim() === ''){
+        errors.username  
+        = 'Utilisateur ne peut être vide';
+    }
+    if(password.trim() === ''){
+        errors.password  
+        = 'Le mot de passe ne peut être vide';
+    }
+    // console.log(
+    //     'userValidator#errors:' 
+    //     + errors 
+    //     +"- errors.username: "
+    //     + errors.username
+    //     +"- errors.password: " 
+    //     + errors.password
+    // );
+    return { errors, valid: Object.keys(errors).length < 1}
 }
